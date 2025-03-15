@@ -5,7 +5,8 @@
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "package": "electron-builder"
+    "package": "electron-builder",
+    "package-mac": "electron-builder --mac"
   },
   "author": "Chris Kau",
   "license": "none",
@@ -19,6 +20,10 @@
     "win": {
       "target": "nsis",
       "icon": "./icon.ico"
+    },
+    "mac":{
+      "target": ["dmg", "zip"],
+      "icon": "./icon.icns"
     }
 
   }
