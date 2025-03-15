@@ -66,55 +66,7 @@ h1{
 }
 
 
-.keyboard{
-    display: grid;
-    grid-template-rows: 25px 25px 25px;
-    grid-template-columns: auto;
-    grid-template-areas: 
-    "."
-    "."
-    ".";
-}
 
-
-.keyboardRow1{
-    display: grid;
-    grid-template-rows: auto;
-    grid-template-columns: repeat(10, 25px);
-    grid-template-areas: 
-    "q w e r t y u i o p";
-    align-self: center;
-    justify-self: center;
-}
-
-.keyboardRow2{
-    display: grid;
-    grid-template-rows: auto;
-    grid-template-columns: repeat(9, 25px);
-    grid-template-areas: 
-    "a s d f g h j k l";
-    align-self: center;
-    justify-self: center;
-}
-.keyboardRow3{
-    display: grid;
-    grid-template-rows: auto;
-    grid-template-columns: repeat(7, 25px);
-    grid-template-areas: 
-    "z x c v b n m";
-    align-self: center;
-    justify-self: center;
-}
-.key{
-    display: flex;
-    width: 20px;
-    height: 20px;
-    justify-content: center;
-    align-items: center;
-    color: white;
-    border: 1px solid white;
-    justify-self: center;
-}
 body{
     background-color: #151515;
 }
