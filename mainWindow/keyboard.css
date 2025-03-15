@@ -1,28 +1,30 @@
 .keyboard{
     display: grid;
-    grid-template-rows: 25px 25px 25px;
+    grid-template-rows: 35px 35px 35px;
     grid-template-columns: auto;
     grid-template-areas: 
     "."
     "."
     ".";
+
 }
 
 
 .keyboardRow1{
     display: grid;
     grid-template-rows: auto;
-    grid-template-columns: repeat(10, 25px);
+    grid-template-columns: repeat(10, 35px);
     grid-template-areas: 
     "q w e r t y u i o p";
     align-self: center;
     justify-self: center;
+    
 }
 
 .keyboardRow2{
     display: grid;
     grid-template-rows: auto;
-    grid-template-columns: repeat(9, 25px);
+    grid-template-columns: repeat(9, 35px);
     grid-template-areas: 
     "a s d f g h j k l";
     align-self: center;
@@ -31,7 +33,7 @@
 .keyboardRow3{
     display: grid;
     grid-template-rows: auto;
-    grid-template-columns: repeat(7, 25px);
+    grid-template-columns: repeat(7, 35px);
     grid-template-areas: 
     "z x c v b n m";
     align-self: center;
@@ -39,11 +41,15 @@
 }
 .key{
     display: flex;
-    width: 20px;
-    height: 20px;
+    width: 25px;
+    height: 25px;
     justify-content: center;
     align-items: center;
     color: white;
-    border: 1px solid white;
+    font-family: "Jersey 10", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    border: 2px solid rgb(59, 59, 59);
+    border-radius: 2px;
     justify-self: center;
 }
