@@ -1,10 +1,11 @@
 const mainIn = document.getElementById("mainInput");
 const body = document.getElementById("body");
+const loseMessage = document.getElementById("loseMessage");
 let keys = Array.from(keyboardDiv1.querySelectorAll('div'))
     .concat(Array.from(keyboardDiv2.querySelectorAll('div')))
     .concat(Array.from(keyboardDiv3.querySelectorAll('div')));
 
-
+loseMessage.innerHTML = '&nbsp;';
 let answer = ''
 document.addEventListener("DOMContentLoaded", ()=>{
     const apiUrl = 'https://random-word-api.herokuapp.com/word?length=5';
@@ -97,6 +98,9 @@ function displayLetters(key, divs){
             win = true;
             playConfetti();
         }
+        if(!win && currentRow == 6){
+            loseMessage.innerHTML = `THE WORD WAS ${answer.join('')}`;
+        }
     }
 }
 
@@ -114,6 +118,7 @@ function playConfetti(){
 }
 
 function resetGame(){
+    loseMessage.innerHTML = '&nbsp;';
     currentRow = 0;
     charPos = 0;
     win = false;
@@ -127,7 +132,7 @@ function resetGame(){
     keys.forEach(key =>{
         key.style.backgroundColor = "#151515"
     })
-    
+
     if(confettidiv){
         confettidiv.remove();
     }

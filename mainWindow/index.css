@@ -8,7 +8,13 @@
     display:flex;
     justify-content: center;
     align-items: center;
-    height:60px;
+    min-height: fit-content;
+    padding: -5px 0;
+    margin: -5px 0;
+}
+
+h1, p, button {
+    margin: 5px 0; /* Reduce vertical spacing */
 }
 
 h1{
@@ -48,10 +54,16 @@ h1{
 
 }
 #changeWord{
-    margin-top: -20px;
     font-size: 20px;
     font-family: "Jersey 10", sans-serif;
     z-index: 11;
+    margin-top: 10px;
+}
+#loseMessage{
+    color: white;
+    font-family: "Jersey 10", sans-serif;
+    font-size: 20px;
+    font-style: normal;
 }
 .confetti{
     position: absolute;
