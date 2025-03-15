@@ -1,16 +1,25 @@
 {
-  "name": "wordle-desktop",
+  "name": "le-word",
   "version": "1.0.0",
-  "description": "",
+  "description": "Game inspired by Wordle, but for desktop!!!!!",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "package": "electron-builder"
   },
   "author": "Chris Kau",
   "license": "none",
   "devDependencies": {
     "electron": "^35.0.1",
     "electron-builder": "^25.1.8"
+  },
+  "build":{
+    "appId": "Chris.LeWord",
+    "productName": "Le Word",
+    "win": {
+      "target": "nsis",
+      "icon": "./icon.ico"
+    }
+
   }
 }
