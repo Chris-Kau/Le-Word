@@ -5,7 +5,8 @@ let mainWindow
 const createWindow = () => {
     mainWindow = new BrowserWindow({
     width: 400,
-    height: 550,
+    height: 640,
+    resizable: false,
     autoHideMenuBar: true,
     webPreferences: {
       preload: __dirname + "/preload.js",
