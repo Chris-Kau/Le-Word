@@ -1,13 +1,18 @@
-let mainIn = document.getElementById("mainInput");
-let body = document.getElementById("body");
-let keys = document.querySelectorAll('div.key');
+const mainIn = document.getElementById("mainInput");
+const body = document.getElementById("body");
+let keys = Array.from(keyboardDiv1.querySelectorAll('div'))
+    .concat(Array.from(keyboardDiv2.querySelectorAll('div')))
+    .concat(Array.from(keyboardDiv3.querySelectorAll('div')));
+
+
 let answer = ''
 document.addEventListener("DOMContentLoaded", ()=>{
     const apiUrl = 'https://random-word-api.herokuapp.com/word?length=5';
     fetch(apiUrl)
       .then(response => response.json())
       .then(data => {
-        answer = data[0].split('');
+        answer = data[0].toUpperCase().split('');
+        console.log(answer);
       })
       .catch(error => console.error('Error fetching random word:', error));
 });
@@ -33,8 +38,9 @@ function checkGuess(guess){
     perfects = [];
     okays = [];
     answercopy = [];
-    answer.forEach(l => answercopy.push(l));
+    answer.forEach(l => answercopy.push(l.toUpperCase()));
     console.log(answercopy);
+    console.log(guess);
     for(let i = 0; i < 5; i++){
         if(guess[i] == answer[i]){
             answercopy[i] = "_";
@@ -53,28 +59,39 @@ function checkGuess(guess){
 }
 
 function displayLetters(key, divs){
+    if(key == " ")
+        return;
     if(charPos >= 0 && charPos <= 4 && key.length == 1){
         divs[charPos].innerHTML = key;
         charPos++;
-    }else if(key == "Backspace" && charPos > 0){
+    }else if(key == "BACKSPACE" && charPos > 0){
         charPos--;
         divs[charPos].innerHTML = '';
-    }else if(key == "Enter" && charPos == 5 && currentRow < 6){
+    }else if(key == "ENTER" && charPos == 5 && currentRow < 6){
         charPos = 0;
         currentRow++;
         let guess = ''
+
+        //set all divs in row to grey
         for(let i = 0; i < divs.length; i++){
             divs[i].style.backgroundColor = "#595959";
             guess = guess.concat('', divs[i].innerHTML)
+            document.getElementById(`key${divs[i].innerHTML}`).style.backgroundColor = "#595959";
         }
         let result = checkGuess(guess);
         let perfects = result[0];
         let okays = result[1];
         
+        //set all divs in row and keyboard to yellow
+        okays.forEach(index => {
+            divs[index].style.backgroundColor = "#B59F3B";
+            document.getElementById(`key${divs[index].innerHTML}`).style.backgroundColor = "#B59F3B";
+        });
+         //set all divs in row and keyboard to green
         perfects.forEach(index =>{ 
-            divs[index].style.backgroundColor = "green"}
-        ); 
-        okays.forEach(index => divs[index].style.backgroundColor = "yellow");
+            divs[index].style.backgroundColor = "#528C4E";
+            document.getElementById(`key${divs[index].innerHTML}`).style.backgroundColor = "#528C4E";
+        }); 
 
         if (perfects.length == 5){
             win = true;
@@ -84,7 +101,7 @@ function displayLetters(key, divs){
 }
 
 function keyPress(event){
-    let key = event.key;
+    let key = event.key.toUpperCase();
     if(!win)
         displayLetters(key, divRows[currentRow]);
 
@@ -106,6 +123,11 @@ function resetGame(){
             div.style.backgroundColor = '#151515';
         })
     });
+
+    keys.forEach(key =>{
+        key.style.backgroundColor = "#151515"
+    })
+    
     if(confettidiv){
         confettidiv.remove();
     }
@@ -114,6 +136,6 @@ function resetGame(){
 document.addEventListener('keydown', keyPress)
 
 window.electron.receive("answer-updated", (newAnswer) => {
-    answer = newAnswer.split(''); 
+    answer = newAnswer.toUpperCase().split(''); 
     resetGame();
 });
