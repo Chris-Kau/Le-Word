@@ -14,17 +14,19 @@
     "electron": "^35.0.1",
     "electron-builder": "^25.1.8"
   },
-  "build":{
+  "build": {
     "appId": "Chris.LeWord",
     "productName": "Le Word",
     "win": {
       "target": "nsis",
       "icon": "./icon.ico"
     },
-    "mac":{
-      "target": ["dmg", "zip"],
+    "mac": {
+      "target": [
+        "dmg",
+        "zip"
+      ],
       "icon": "./icon.icns"
     }
-
   }
 }

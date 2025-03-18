@@ -47,7 +47,6 @@ app.on('activate', () => {
     createMainWindow();
   }
 });
-}
 
 
 
