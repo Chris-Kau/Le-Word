@@ -1,6 +1,19 @@
 const { app, BrowserWindow, ipcMain } = require('electron')
 
 let mainWindow
+let changeWordWindow
+const gotTheLock = app.requestSingleInstanceLock()
+if (!gotTheLock){
+  app.quit()
+}else{
+  app.on('second-instance', (event, commandLine, workingDirectory, additionalData)=>{
+    console.log(additionalData)
+    if(mainWindow){
+      if(mainWindow.isMinimized()) mainWindow.restore()
+      mainWindow.focus()
+    }
+  })
+}
 
 const createWindow = () => {
     mainWindow = new BrowserWindow({
@@ -15,12 +28,36 @@ const createWindow = () => {
   mainWindow.loadFile('./mainWindow/index.html')
 }
 
+
 app.whenReady().then(() => {
   createWindow()
 })
 
+
+app.on('window-all-closed', () => {
+  // On macOS, apps typically stay open even when all windows are closed
+  if (process.platform !== 'darwin') {
+    app.quit();
+  }
+});
+
+app.on('activate', () => {
+  // macOS behavior: re-create the window when the dock icon is clicked
+  if (!mainWindow) {
+    createMainWindow();
+  }
+});
+}
+
+
+
 ipcMain.on("open-change-word-window", ()=>{
-  const win = new BrowserWindow({
+  if(changeWordWindow){
+    if(changeWordWindow.isMinimized()) changeWordWindow.restore();
+    changeWordWindow.focus();
+    return
+  }
+  changeWordWindow= new BrowserWindow({
     width: 300,
     height: 300,
     resizable: false,
@@ -30,7 +67,10 @@ ipcMain.on("open-change-word-window", ()=>{
     }
   })
   console.log("Create Change Word Window")
-  win.loadFile("./changeWordWindow/changeWord.html");
+  changeWordWindow.loadFile("./changeWordWindow/changeWord.html");
+  changeWordWindow.on("closed", () => {
+    changeWordWindow = null;
+  });
 });
 
 
