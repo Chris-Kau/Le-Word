@@ -1,7 +1,7 @@
 {
   "name": "le-word",
-  "version": "1.0.0",
-  "description": "Game inspired by Wordle, but for desktop!!!!!",
+  "version": "1.1.0",
+  "description": "Le Word",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
