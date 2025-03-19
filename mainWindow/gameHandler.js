@@ -117,7 +117,7 @@ function displayLetters(key, divs){
 
 function keyPress(event){
     let key = event.key.toUpperCase();
-    if(!win)
+    if(!win && [...("ABCDEFGHIJKLMNOPQRSTUVWXYZ".split('')), "BACKSPACE", "ENTER"].includes(key))
         displayLetters(key, divRows[currentRow]);
 
 }

@@ -1,5 +1,5 @@
 const { app, BrowserWindow, ipcMain } = require('electron')
-const getWords = require('./getWords');
+const getWords = require(__dirname + '/getwords.js');
 let mainWindow
 let changeWordWindow
 
@@ -26,6 +26,7 @@ const createWindow = () => {
       preload: __dirname + "/preload.js",
     },
   })
+  mainWindow.setIcon(__dirname + "/icon.png")
   mainWindow.loadFile('./mainWindow/index.html')
 }
 
@@ -45,7 +46,7 @@ app.on('window-all-closed', () => {
 app.on('activate', () => {
   // macOS behavior: re-create the window when the dock icon is clicked
   if (!mainWindow) {
-    createMainWindow();
+    createWindow();
   }
 });
 
@@ -66,7 +67,6 @@ ipcMain.on("open-change-word-window", ()=>{
       preload: __dirname + "/preload.js"
     }
   })
-  console.log("Create Change Word Window")
   changeWordWindow.loadFile("./changeWordWindow/changeWord.html");
   changeWordWindow.on("closed", () => {
     changeWordWindow = null;
