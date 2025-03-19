@@ -1,7 +1,8 @@
 const { app, BrowserWindow, ipcMain } = require('electron')
-
+const getWords = require('./getWords');
 let mainWindow
 let changeWordWindow
+
 const gotTheLock = app.requestSingleInstanceLock()
 if (!gotTheLock){
   app.quit()
@@ -81,4 +82,8 @@ ipcMain.on("set-answer", (e, newAnswer) => {
       // Send the updated answer to Window 1 (main window)
       mainWindow.webContents.send("answer-updated", currentAnswer);
   }
+});
+
+ipcMain.handle("get-words", async () => {
+  return await getWords();
 });

@@ -1,21 +1,20 @@
 const mainIn = document.getElementById("mainInput");
 const body = document.getElementById("body");
 const loseMessage = document.getElementById("loseMessage");
+let answerList = [];
+let guessList = [];
+
 let keys = Array.from(keyboardDiv1.querySelectorAll('div'))
     .concat(Array.from(keyboardDiv2.querySelectorAll('div')))
     .concat(Array.from(keyboardDiv3.querySelectorAll('div')));
 
 loseMessage.innerHTML = '&nbsp;';
-let answer = ''
-document.addEventListener("DOMContentLoaded", ()=>{
-    const apiUrl = 'https://random-word-api.herokuapp.com/word?length=5';
-    fetch(apiUrl)
-      .then(response => response.json())
-      .then(data => {
-        answer = data[0].toUpperCase().split('');
-        console.log(answer);
-      })
-      .catch(error => console.error('Error fetching random word:', error));
+let answer;
+window.electron.getWords().then(words =>{
+    words[0].forEach(word => {answerList.push(word.toUpperCase());})
+    words[1].forEach(word => {guessList.push(word.toUpperCase());})
+    answer = answerList[Math.floor(Math.random() * answerList.length)].toUpperCase().split('');
+
 });
 let letters = ['A','B','C','D','E','F'];
 let divRows = [];
@@ -40,8 +39,6 @@ function checkGuess(guess){
     okays = [];
     answercopy = [];
     answer.forEach(l => answercopy.push(l.toUpperCase()));
-    console.log(answercopy);
-    console.log(guess);
     for(let i = 0; i < 5; i++){
         if(guess[i] == answer[i]){
             answercopy[i] = "_";
@@ -69,16 +66,21 @@ function displayLetters(key, divs){
         charPos--;
         divs[charPos].innerHTML = '';
     }else if(key == "ENTER" && charPos == 5 && currentRow < 6){
+        let guess = '';
+        for(let i = 0; i < divs.length; i++)
+            guess = guess.concat('', divs[i].innerHTML);
+        if(!guessList.includes(guess) && !answerList.includes(guess)){
+            console.log("answer not in word list");
+            return;
+        }
         charPos = 0;
         currentRow++;
-        let guess = ''
-
         //set all divs in row to grey
         for(let i = 0; i < divs.length; i++){
             divs[i].style.backgroundColor = "#595959";
-            guess = guess.concat('', divs[i].innerHTML)
             document.getElementById(`key${divs[i].innerHTML}`).style.backgroundColor = "#595959";
         }
+
         let result = checkGuess(guess);
         let perfects = result[0];
         let okays = result[1];

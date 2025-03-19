@@ -3,7 +3,13 @@ const customTextField = document.getElementById('customInput');
 const errorMsg = document.getElementById('error-msg');
 const randomBtn = document.getElementById("randomBtn");
 const body = document.getElementById('body');
-
+let answerList = [];
+document.addEventListener("DOMContentLoaded", ()=>{
+    window.electron.getWords().then(words =>{
+        words[0].forEach(word => {answerList.push(word);})
+    });
+    answer = answerList[Math.floor(Math.random() * answerList.length)].toUpperCase().split('');
+});
 btn.addEventListener('click', ()=>{
     errorMsg.innerHTML = ' '
     if(customTextField.value.length != 5){
@@ -16,14 +22,7 @@ btn.addEventListener('click', ()=>{
 
 randomBtn.addEventListener('click', ()=>{
     let loadingOverlay = document.createElement('div')
-    loadingOverlay.className = "overlay";
     body.appendChild(loadingOverlay);
-    const apiUrl = 'https://random-word-api.herokuapp.com/word?length=5';
-    fetch(apiUrl)
-      .then(response => response.json())
-      .then(data => {
-        window.electron.setAnswer(data[0]);
-        window.close();
-      })
-      .catch(error => console.error('Error fetching random word:', error));
+    window.electron.setAnswer(answerList[Math.floor(Math.random() * answerList.length)]);
+    window.close();
 })
