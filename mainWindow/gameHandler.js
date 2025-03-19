@@ -71,6 +71,15 @@ function displayLetters(key, divs){
             guess = guess.concat('', divs[i].innerHTML);
         if(!guessList.includes(guess) && !answerList.includes(guess)){
             console.log("answer not in word list");
+            for(let i = 0; i < divs.length; i++){
+                divs[i].style.animation = "shake .1s";
+            }
+            setTimeout(() => {
+                for(let i = 0; i < divs.length; i++){
+                    divs[i].style.animation = "none";
+                }
+            }, 100);
+
             return;
         }
         charPos = 0;
